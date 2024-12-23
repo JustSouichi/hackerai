@@ -1,20 +1,15 @@
 document.body.addEventListener("click", function (event) {
   let target = event.target;
 
-  // Trova il link cliccato
   while (target && target !== document.body) {
     if (target.tagName === "A" && target.href) {
-      event.preventDefault(); // Blocca il comportamento predefinito
+      event.preventDefault();
       const link = target.href;
 
-      // Mostra il modale
       showCustomModal(link, (confirmed) => {
         if (confirmed) {
-          // Apre il link in una nuova scheda
           window.open(link, "_blank");
         }
-
-        // Salva il log
         saveLog(link, confirmed ? "Opened" : "Cancelled");
       });
       return;
@@ -23,7 +18,6 @@ document.body.addEventListener("click", function (event) {
   }
 });
 
-// Salva i log in `chrome.storage.local`
 function saveLog(link, status) {
   const now = new Date();
   const logEntry = {
@@ -36,8 +30,14 @@ function saveLog(link, status) {
   chrome.storage.local.get({ logs: [] }, (data) => {
     const logs = data.logs || [];
     logs.push(logEntry);
+    logs.sort((a, b) => {
+      const dateA = new Date(`${a.date}T${a.time}`);
+      const dateB = new Date(`${b.date}T${b.time}`);
+      return dateB - dateA;
+    });
+
     chrome.storage.local.set({ logs }, () => {
-      console.log("Log saved:", logEntry);
+      chrome.runtime.sendMessage({ action: "updateLogs", logs });
     });
   });
 }

@@ -1,59 +1,14 @@
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
   }
-  
-  .modal-content {
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    width: 400px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
-  
-  .modal-content h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .modal-content p {
-    margin-bottom: 20px;
-  }
-  
-  .modal-link {
-    word-break: break-word;
-    color: blue;
-  }
-  
-  .modal-buttons {
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .btn-accept {
-    background-color: green;
-    color: white;
-  }
-  
-  .btn-cancel {
-    background-color: red;
-    color: white;
-  }
-  
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
