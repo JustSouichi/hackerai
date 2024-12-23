@@ -44,7 +44,7 @@ function showCustomModal(link, callback) {
       <h2 class="text-xl font-bold text-gray-900 text-center">Security Alert</h2>
     </div>
     <p class="text-gray-700 text-center text-sm mb-6">You are about to access the following link:</p>
-    <p class="text-blue-600 font-medium text-center bg-gray-50 border border-blue-200 p-3 rounded-lg shadow-sm break-words">https://example.com</p>
+    <p class="text-blue-600 font-medium text-center bg-gray-50 border border-blue-200 p-3 rounded-lg shadow-sm break-words">${link}</p>
     <p class="text-gray-500 text-xs text-center mt-6">Powered by <span class="font-semibold text-gray-700">HackerAI</span></p>
     <div class="flex justify-between items-center mt-8 gap-4">
       <button id="cancel" class="flex-1 px-5 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg shadow-sm hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
