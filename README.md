@@ -1,3 +1,4 @@
+
 # 🚀 HackerAI - Link Confirmation
 
 ![HackerAI Banner](./l.png)
@@ -13,7 +14,7 @@
 ![Languages](https://img.shields.io/github/languages/top/JustSouichi/hackerai?style=flat-square)
 ![Forks](https://img.shields.io/github/forks/JustSouichi/hackerai?style=social)
 
-HackerAI is an open-source Chrome extension designed to improve online security for beginners and small businesses. It provides a lightweight solution to mitigate phishing attacks and suspicious links by prompting the user for confirmation before opening any link.
+HackerAI is an open-source Chrome extension designed to improve online security by alerting users before they open potentially harmful links. It provides a lightweight solution to mitigate phishing attacks and suspicious links by prompting users for confirmation before they proceed.
 
 ---
 
