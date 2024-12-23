@@ -69,23 +69,48 @@ function saveLog(link, status) {
     date: now.toISOString().split("T")[0],
     time: now.toTimeString().split(" ")[0],
     status,
-    clicked: false // Nuovo campo per gestire se il link è stato cliccato
+    clicked: false, // Indica se il link è stato cliccato
+    reported: false // Indica se il link è segnalato come phishing
   };
 
-  chrome.storage.local.get({ logs: [] }, (data) => {
-    const logs = data.logs || [];
-    logs.push(logEntry);
+  // Controlla se il link è segnalato come phishing
+  checkLinkForSpam(link).then((isReported) => {
+    logEntry.reported = isReported;
 
-    // Ordina i log per data e ora (il più recente per primo)
-    logs.sort((a, b) => {
-      const dateA = new Date(`${a.date}T${a.time}`);
-      const dateB = new Date(`${b.date}T${b.time}`);
-      return dateB - dateA;
-    });
+    chrome.storage.local.get({ logs: [] }, (data) => {
+      const logs = data.logs || [];
+      logs.push(logEntry);
 
-    // Salva i log aggiornati
-    chrome.storage.local.set({ logs }, () => {
-      chrome.runtime.sendMessage({ action: "updateLogs", logs });
+      // Ordina i log per data e ora (il più recente per primo)
+      logs.sort((a, b) => {
+        const dateA = new Date(`${a.date}T${a.time}`);
+        const dateB = new Date(`${b.date}T${b.time}`);
+        return dateB - dateA;
+      });
+
+      // Salva i log aggiornati
+      chrome.storage.local.set({ logs }, () => {
+        chrome.runtime.sendMessage({ action: "updateLogs", logs });
+      });
     });
   });
+}
+
+// Funzione per controllare se un link è segnalato come phishing
+async function checkLinkForSpam(link) {
+  const url = `https://checkurl.phishtank.com/checkurl/`;
+
+  try {
+    const response = await fetch(`${url}?format=json&url=${encodeURIComponent(link)}`, {
+      method: "GET"
+    });
+
+    const data = await response.json();
+
+    // Controlla se il link è segnalato come phishing
+    return data.results.in_database && data.results.valid;
+  } catch (error) {
+    console.error("Errore durante il controllo del link:", error);
+    return false;
+  }
 }

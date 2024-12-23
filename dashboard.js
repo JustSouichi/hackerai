@@ -16,16 +16,12 @@ function updateLogTable() {
   });
 }
 
-// Funzione per popolare la tabella
 function populateLogTable(logs) {
   const tableBody = document.getElementById("log-table");
   tableBody.innerHTML = ""; // Pulisce la tabella
 
-  logs.forEach(async (log, index) => {
+  logs.forEach((log, index) => {
     const row = document.createElement("tr");
-
-    // Controlla se il link è segnalato
-    const reported = await checkLinkForSpam(log.link);
 
     row.innerHTML = `
       <td class="border border-gray-300 px-4 py-2">${log.date}</td>
@@ -37,7 +33,7 @@ function populateLogTable(logs) {
         ${log.clicked ? "✅ True" : "❌ False"}
       </td>
       <td class="border border-gray-300 px-4 py-2 text-center">
-        ${reported ? "⚠️ Reported" : "✔️ Safe"}
+        ${log.reported ? "⚠️ Reported" : "✔️ Safe"}
       </td>
       <td class="border border-gray-300 px-4 py-2">${log.status}</td>
     `;
@@ -52,6 +48,7 @@ function populateLogTable(logs) {
     });
   });
 }
+
 
 // Funzione per marcare un link come cliccato
 function markLinkAsClicked(index) {
