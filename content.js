@@ -68,13 +68,13 @@ document.body.addEventListener("click", function (event) {
       else if (link.startsWith("https:")) {
         clicked = true; // Segna come cliccato di default
         saveLog(link, status, clicked); // Salva come cliccato senza bisogno di conferma
-        window.open(link, "_blank"); // Apre il link in una nuova scheda
+        window.location.href = link; // Apre il link nella stessa finestra
         return;
       }
 
       // Caso 4: Altri link (apertura diretta senza alert)
       saveLog(link, status, clicked); // Registra il clic diretto
-      window.open(link, "_blank");
+      window.location.href = link; // Apre il link nella stessa finestra
       return;
     }
     target = target.parentElement;
@@ -107,5 +107,44 @@ function saveLog(link, status, clicked) {
     chrome.storage.local.set({ logs }, () => {
       chrome.runtime.sendMessage({ action: "updateLogs", logs });
     });
+  });
+}
+
+// Funzione per mostrare il modal di conferma
+function showCustomModal(link, callback) {
+  const modalHtml = `
+    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 transition-opacity duration-300">
+      <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full transform transition-all duration-500 ease-in-out scale-100 hover:scale-105">
+        <div class="text-xl font-semibold text-red-600 mb-4 flex items-center">
+          <span class="mr-2 text-3xl">⚠️</span>
+          Security Alert
+        </div>
+        <p class="mb-4 text-gray-800">You're about to open this link:</p>
+        <p class="mb-4 text-blue-600 break-all font-medium">${link}</p>
+        <div class="flex justify-center gap-4">
+          <button id="accept" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-md font-semibold transition-colors duration-300">
+            Proceed
+          </button>
+          <button id="cancel" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md font-semibold transition-colors duration-300">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+  const modal = document.createElement("div");
+  modal.innerHTML = modalHtml;
+  document.body.appendChild(modal);
+
+  // Gestisci il clic sul tasto "Proceed"
+  document.getElementById("accept").addEventListener("click", () => {
+    callback(true); // Link confermato, apri in nuovo tab
+    modal.remove(); // Rimuovi il modal
+  });
+
+  // Gestisci il clic sul tasto "Cancel"
+  document.getElementById("cancel").addEventListener("click", () => {
+    callback(false); // Link non confermato, non aprire il link
+    modal.remove(); // Rimuovi il modal
   });
 }
