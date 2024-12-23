@@ -1,13 +1,30 @@
 {
-    "manifest_version": 3,
-    "name": "HackerAI - Link Confirmation",
-    "version": "1.0",
-    "description": "Prompts confirmation before opening a link.",
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["content.js"]
-      }
-    ]
+  "manifest_version": 3,
+  "name": "HackerAI - Link Confirmation",
+  "version": "1.0",
+  "description": "Prompts confirmation before opening a link and logs activity.",
+  "icons": {
+    "16": "icons/warning-icon.png",
+    "48": "icons/warning-icon.png",
+    "128": "icons/warning-icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["modal.js", "content.js"]
+    }
+  ],
+  "permissions": ["storage", "tabs"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_icon": {
+      "16": "icons/warning-icon.png",
+      "48": "icons/warning-icon.png",
+      "128": "icons/warning-icon.png"
+    },
+    "default_title": "Open Dashboard"
+  },
+  "background": {
+    "service_worker": "background.js"
   }
-  
+}

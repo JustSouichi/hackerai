@@ -1,27 +1,43 @@
-document.body.addEventListener('click', function (event) {
-    // Identify the clicked element
-    let target = event.target;
+document.body.addEventListener("click", function (event) {
+  let target = event.target;
 
-    // Look for the closest link (handles buttons, divs, etc.)
-    while (target && target !== document.body) {
-      if (target.tagName === 'A' && target.href) {
-        // Standard HTML link (<a>)
-        event.preventDefault();
-        const confirmed = confirm(`Do you really want to open this link?\n${target.href}`);
+  // Trova il link cliccato
+  while (target && target !== document.body) {
+    if (target.tagName === "A" && target.href) {
+      event.preventDefault(); // Blocca il comportamento predefinito
+      const link = target.href;
+
+      // Mostra il modale
+      showCustomModal(link, (confirmed) => {
         if (confirmed) {
-          window.location.href = target.href;
+          // Apre il link in una nuova scheda
+          window.open(link, "_blank");
         }
-        return;
-      } else if (target.getAttribute && target.getAttribute('data-link')) {
-        // Custom link (e.g., <div data-link="url">)
-        event.preventDefault();
-        const link = target.getAttribute('data-link');
-        const confirmed = confirm(`Do you really want to open this link?\n${link}`);
-        if (confirmed) {
-          window.location.href = link;
-        }
-        return;
-      }
-      target = target.parentElement;
+
+        // Salva il log
+        saveLog(link, confirmed ? "Opened" : "Cancelled");
+      });
+      return;
     }
+    target = target.parentElement;
+  }
 });
+
+// Salva i log in `chrome.storage.local`
+function saveLog(link, status) {
+  const now = new Date();
+  const logEntry = {
+    link,
+    date: now.toISOString().split("T")[0],
+    time: now.toTimeString().split(" ")[0],
+    status
+  };
+
+  chrome.storage.local.get({ logs: [] }, (data) => {
+    const logs = data.logs || [];
+    logs.push(logEntry);
+    chrome.storage.local.set({ logs }, () => {
+      console.log("Log saved:", logEntry);
+    });
+  });
+}
