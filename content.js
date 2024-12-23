@@ -26,28 +26,36 @@ document.body.addEventListener("click", function (event) {
       event.preventDefault(); // Blocca il comportamento predefinito
       const link = target.href;
 
+      // Registra il link cliccato in ogni caso
+      let status = "Direct Opened";
+
       // Caso 1: Link HTTP (alert sempre richiesto)
       if (link.startsWith("http:")) {
         showCustomModal(link, (confirmed) => {
+          status = confirmed ? "Opened" : "Cancelled";
+          saveLog(link, status);
           if (confirmed) {
             window.open(link, "_blank"); // Apre il link in una nuova scheda
           }
-          saveLog(link, confirmed ? "Opened" : "Cancelled");
         });
+        return;
       }
+
       // Caso 2: Link HTTPS (alert solo su siti email)
-      else if (link.startsWith("https:") && isEmailDomain()) {
+      if (link.startsWith("https:") && isEmailDomain()) {
         showCustomModal(link, (confirmed) => {
+          status = confirmed ? "Opened" : "Cancelled";
+          saveLog(link, status);
           if (confirmed) {
             window.open(link, "_blank"); // Apre il link in una nuova scheda
           }
-          saveLog(link, confirmed ? "Opened" : "Cancelled");
         });
+        return;
       }
-      // Caso 3: Altri link (apri direttamente)
-      else {
-        window.open(link, "_blank");
-      }
+
+      // Caso 3: Altri link (apertura diretta senza alert)
+      saveLog(link, status); // Registra il clic diretto
+      window.open(link, "_blank");
       return;
     }
     target = target.parentElement;
