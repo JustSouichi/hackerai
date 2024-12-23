@@ -56,10 +56,6 @@ function showCustomModal(link, callback) {
     </div>
   </div>
 </div>
-
-
-
-
   `;
   
   const modal = document.createElement("div");
