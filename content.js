@@ -62,14 +62,14 @@ document.body.addEventListener("click", function (event) {
   }
 });
 
-// Funzione per salvare i log
 function saveLog(link, status) {
   const now = new Date();
   const logEntry = {
     link,
     date: now.toISOString().split("T")[0],
     time: now.toTimeString().split(" ")[0],
-    status
+    status,
+    clicked: false // Nuovo campo per gestire se il link è stato cliccato
   };
 
   chrome.storage.local.get({ logs: [] }, (data) => {
