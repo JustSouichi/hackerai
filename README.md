@@ -1,18 +1,23 @@
-
 # 🚀 HackerAI - Link Confirmation
 
 ![HackerAI Banner](./l.png)
 
-![License](https://img.shields.io/github/license/JustSouichi/hackerai?style=flat-square)
-![Version](https://img.shields.io/github/v/release/JustSouichi/hackerai?style=flat-square)
-![Stars](https://img.shields.io/github/stars/JustSouichi/hackerai?style=social)
-![Contributors](https://img.shields.io/github/contributors/JustSouichi/hackerai?style=flat-square)
-![Issues](https://img.shields.io/github/issues/JustSouichi/hackerai?style=flat-square)
-![Pull Requests](https://img.shields.io/github/issues-pr/JustSouichi/hackerai?style=flat-square)
-![Build Status](https://img.shields.io/github/actions/workflow/status/JustSouichi/hackerai/main.yml?branch=main&style=flat-square)
-![Code Size](https://img.shields.io/github/languages/code-size/JustSouichi/hackerai?style=flat-square)
-![Languages](https://img.shields.io/github/languages/top/JustSouichi/hackerai?style=flat-square)
-![Forks](https://img.shields.io/github/forks/JustSouichi/hackerai?style=social)
+### 📊 Project Status
+
+| Status                        | Badge                                      |
+|-------------------------------|--------------------------------------------|
+| **License**                    | ![License](https://img.shields.io/github/license/JustSouichi/hackerai?style=flat-square) |
+| **Release**                    | ![Release](https://img.shields.io/github/v/release/JustSouichi/hackerai?style=flat-square) |
+| **Stars**                      | ![Stars](https://img.shields.io/github/stars/JustSouichi/hackerai?style=social) |
+| **Contributors**               | ![Contributors](https://img.shields.io/github/contributors/JustSouichi/hackerai?style=flat-square) |
+| **Issues**                     | ![Issues](https://img.shields.io/github/issues/JustSouichi/hackerai?style=flat-square) |
+| **Pull Requests**              | ![Pull Requests](https://img.shields.io/github/issues-pr/JustSouichi/hackerai?style=flat-square) |
+| **Build Status**               | ![Build Status](https://img.shields.io/github/actions/workflow/status/JustSouichi/hackerai/main.yml?branch=main&style=flat-square) |
+| **Code Size**                  | ![Code Size](https://img.shields.io/github/languages/code-size/JustSouichi/hackerai?style=flat-square) |
+| **Languages**                  | ![Languages](https://img.shields.io/github/languages/top/JustSouichi/hackerai?style=flat-square) |
+| **Forks**                       | ![Forks](https://img.shields.io/github/forks/JustSouichi/hackerai?style=social) |
+
+---
 
 HackerAI is an open-source Chrome extension designed to improve online security by alerting users before they open potentially harmful links. It provides a lightweight solution to mitigate phishing attacks and suspicious links by prompting users for confirmation before they proceed.
 
