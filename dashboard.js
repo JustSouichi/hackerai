@@ -32,9 +32,6 @@ function populateLogTable(logs) {
       <td class="border border-gray-300 px-4 py-2 text-center">
         ${log.clicked ? "✅ True" : "❌ False"}
       </td>
-      <td class="border border-gray-300 px-4 py-2 text-center">
-        ${log.reported ? "⚠️ Reported" : "✔️ Safe"}
-      </td>
       <td class="border border-gray-300 px-4 py-2">${log.status}</td>
     `;
     tableBody.appendChild(row);
@@ -49,7 +46,6 @@ function populateLogTable(logs) {
   });
 }
 
-
 // Funzione per marcare un link come cliccato
 function markLinkAsClicked(index) {
   chrome.storage.local.get({ logs: [] }, (data) => {
@@ -61,11 +57,4 @@ function markLinkAsClicked(index) {
       });
     }
   });
-}
-
-// Funzione per controllare se il link è segnalato
-async function checkLinkForSpam(link) {
-  // Simulazione di verifica: sostituire con un'API reale
-  const flaggedLinks = ["http://example.com", "http://spam.com"];
-  return flaggedLinks.includes(link);
 }

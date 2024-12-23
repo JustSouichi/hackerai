@@ -17,23 +17,34 @@ function isEmailDomain() {
   return emailDomains.some((domain) => hostname.includes(domain));
 }
 
-// Aggiungi un listener per i click sui link
+// Funzione per estrarre il link effettivo dal parametro "q" di Google
+function extractRealLink(url) {
+  const urlParams = new URLSearchParams(new URL(url).search);
+  return urlParams.get('q');
+}
+
 document.body.addEventListener("click", function (event) {
   let target = event.target;
 
   while (target && target !== document.body) {
     if (target.tagName === "A" && target.href) {
       event.preventDefault(); // Blocca il comportamento predefinito
-      const link = target.href;
+      let link = target.href;
 
-      // Registra il link cliccato in ogni caso
+      // Estrai il link effettivo se è un link di reindirizzamento (ad esempio da Gmail)
+      if (link.includes("https://www.google.com/url?q=")) {
+        link = extractRealLink(link);
+      }
+
+      // Imposta il valore di "clicked" per i link HTTPS come True di default solo se non sono da email
       let status = "Direct Opened";
+      let clicked = false;
 
       // Caso 1: Link HTTP (alert sempre richiesto)
       if (link.startsWith("http:")) {
         showCustomModal(link, (confirmed) => {
           status = confirmed ? "Opened" : "Cancelled";
-          saveLog(link, status);
+          saveLog(link, status, confirmed); // Salva anche lo stato di apertura
           if (confirmed) {
             window.open(link, "_blank"); // Apre il link in una nuova scheda
           }
@@ -41,11 +52,11 @@ document.body.addEventListener("click", function (event) {
         return;
       }
 
-      // Caso 2: Link HTTPS (alert solo su siti email)
-      if (link.startsWith("https:") && isEmailDomain()) {
+      // Caso 2: Link HTTPS da email (mostra l'alert)
+      else if (link.startsWith("https:") && isEmailDomain()) {
         showCustomModal(link, (confirmed) => {
           status = confirmed ? "Opened" : "Cancelled";
-          saveLog(link, status);
+          saveLog(link, status, confirmed); // Salva anche lo stato di apertura
           if (confirmed) {
             window.open(link, "_blank"); // Apre il link in una nuova scheda
           }
@@ -53,8 +64,16 @@ document.body.addEventListener("click", function (event) {
         return;
       }
 
-      // Caso 3: Altri link (apertura diretta senza alert)
-      saveLog(link, status); // Registra il clic diretto
+      // Caso 3: Link HTTPS (cliccato di default senza alert se non da email)
+      else if (link.startsWith("https:")) {
+        clicked = true; // Segna come cliccato di default
+        saveLog(link, status, clicked); // Salva come cliccato senza bisogno di conferma
+        window.open(link, "_blank"); // Apre il link in una nuova scheda
+        return;
+      }
+
+      // Caso 4: Altri link (apertura diretta senza alert)
+      saveLog(link, status, clicked); // Registra il clic diretto
       window.open(link, "_blank");
       return;
     }
@@ -62,55 +81,31 @@ document.body.addEventListener("click", function (event) {
   }
 });
 
-function saveLog(link, status) {
+// Funzione per salvare i log
+function saveLog(link, status, clicked) {
   const now = new Date();
   const logEntry = {
     link,
     date: now.toISOString().split("T")[0],
     time: now.toTimeString().split(" ")[0],
     status,
-    clicked: false, // Indica se il link è stato cliccato
-    reported: false // Indica se il link è segnalato come phishing
+    clicked, // Imposta il campo clicked
   };
 
-  // Controlla se il link è segnalato come phishing
-  checkLinkForSpam(link).then((isReported) => {
-    logEntry.reported = isReported;
+  chrome.storage.local.get({ logs: [] }, (data) => {
+    const logs = data.logs || [];
+    logs.push(logEntry);
 
-    chrome.storage.local.get({ logs: [] }, (data) => {
-      const logs = data.logs || [];
-      logs.push(logEntry);
+    // Ordina i log per data e ora (il più recente per primo)
+    logs.sort((a, b) => {
+      const dateA = new Date(`${a.date}T${a.time}`);
+      const dateB = new Date(`${b.date}T${b.time}`);
+      return dateB - dateA;
+    });
 
-      // Ordina i log per data e ora (il più recente per primo)
-      logs.sort((a, b) => {
-        const dateA = new Date(`${a.date}T${a.time}`);
-        const dateB = new Date(`${b.date}T${b.time}`);
-        return dateB - dateA;
-      });
-
-      // Salva i log aggiornati
-      chrome.storage.local.set({ logs }, () => {
-        chrome.runtime.sendMessage({ action: "updateLogs", logs });
-      });
+    // Salva i log aggiornati
+    chrome.storage.local.set({ logs }, () => {
+      chrome.runtime.sendMessage({ action: "updateLogs", logs });
     });
   });
-}
-
-// Funzione per controllare se un link è segnalato come phishing
-async function checkLinkForSpam(link) {
-  const url = `https://checkurl.phishtank.com/checkurl/`;
-
-  try {
-    const response = await fetch(`${url}?format=json&url=${encodeURIComponent(link)}`, {
-      method: "GET"
-    });
-
-    const data = await response.json();
-
-    // Controlla se il link è segnalato come phishing
-    return data.results.in_database && data.results.valid;
-  } catch (error) {
-    console.error("Errore durante il controllo del link:", error);
-    return false;
-  }
 }
