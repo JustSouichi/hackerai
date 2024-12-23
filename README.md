@@ -1,5 +1,16 @@
 # 🚀 HackerAI - Link Confirmation
 
+![License](https://img.shields.io/github/license/JustSouichi/hackerai?style=flat-square)
+![Version](https://img.shields.io/github/v/release/JustSouichi/hackerai?style=flat-square)
+![Stars](https://img.shields.io/github/stars/JustSouichi/hackerai?style=social)
+![Contributors](https://img.shields.io/github/contributors/JustSouichi/hackerai?style=flat-square)
+![Issues](https://img.shields.io/github/issues/JustSouichi/hackerai?style=flat-square)
+![Pull Requests](https://img.shields.io/github/issues-pr/JustSouichi/hackerai?style=flat-square)
+![Build Status](https://img.shields.io/github/actions/workflow/status/JustSouichi/hackerai/main.yml?branch=main&style=flat-square)
+![Code Size](https://img.shields.io/github/languages/code-size/JustSouichi/hackerai?style=flat-square)
+![Languages](https://img.shields.io/github/languages/top/JustSouichi/hackerai?style=flat-square)
+![Forks](https://img.shields.io/github/forks/JustSouichi/hackerai?style=social)
+
 HackerAI is an open-source Chrome extension designed to improve online security for beginners and small businesses. It provides a lightweight solution to mitigate phishing attacks and suspicious links by prompting the user for confirmation before opening any link.
 
 ---
@@ -16,6 +27,7 @@ HackerAI is an open-source Chrome extension designed to improve online security 
 ---
 
 ## 🛠️ Installation
+
 Follow these steps to install the extension locally:
 
 1. 🖥️ **Clone the repository**:
@@ -34,6 +46,7 @@ Follow these steps to install the extension locally:
 ---
 
 ## ⚙️ How It Works
+
 HackerAI injects a `content.js` script into all web pages. This script intercepts clicks on links and displays a confirmation dialog, allowing the user to decide whether to proceed or cancel.
 
 ### 🔍 Example Workflow:
@@ -44,8 +57,6 @@ HackerAI injects a `content.js` script into all web pages. This script intercept
    https://example.com
    ```
 3. 🟢 The user can choose to proceed or 🛑 cancel.
-
-This simple yet effective mechanism helps prevent accidental clicks on malicious or phishing links.
 
 ---
 
@@ -101,6 +112,7 @@ ${link}`);
 ---
 
 ## 🎯 Future Goals
+
 | Feature                         | Status     |
 |---------------------------------|------------|
 | 🤖 **AI-Powered Link Analysis** | 🟡 Planned |
@@ -114,6 +126,7 @@ ${link}`);
 ---
 
 ## 🙌 Contributing
+
 Contributions are welcome! Follow these steps to get started:
 
 1. 🔀 **Fork the repository** on GitHub.
@@ -138,16 +151,13 @@ Please refer to our [Contributing Guidelines](CONTRIBUTING.md) for more details.
 ---
 
 ## 🛠️ Issues
-If you encounter any problems or have feature requests, feel free to open an issue on GitHub: [https://github.com/JustSouichi/hackerai/issues](https://github.com/JustSouichi/hackerai/issues).
 
-When reporting bugs, please include:
-- 🪪 Steps to reproduce the issue.
-- ✅ Expected behavior vs. ❌ actual behavior.
-- 📸 Screenshots or logs, if applicable.
+If you encounter any problems or have feature requests, feel free to open an issue on GitHub: [https://github.com/JustSouichi/hackerai/issues](https://github.com/JustSouichi/hackerai/issues).
 
 ---
 
 ## 🌐 Social Links
+
 Stay updated with the latest developments and connect with the creator:
 - **GitHub Repository**: [https://github.com/JustSouichi/hackerai](https://github.com/JustSouichi/hackerai)
 - **TikTok**: [@justsouichi](https://www.tiktok.com/@justsouichi)
@@ -156,9 +166,11 @@ Stay updated with the latest developments and connect with the creator:
 ---
 
 ## 📜 License
+
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 🤝 Acknowledgements
+
 HackerAI is inspired by the need to make online security accessible for everyone, especially for those with little technical expertise. Special thanks to the open-source community for their support and resources.
