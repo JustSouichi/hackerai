@@ -26,17 +26,26 @@ document.body.addEventListener("click", function (event) {
       event.preventDefault(); // Blocca il comportamento predefinito
       const link = target.href;
 
-      // Verifica se il link è https e il sito è un dominio email
-      if (link.startsWith("https:") && isEmailDomain()) {
-        // Mostra il modale
+      // Caso 1: Link HTTP (alert sempre richiesto)
+      if (link.startsWith("http:")) {
         showCustomModal(link, (confirmed) => {
           if (confirmed) {
             window.open(link, "_blank"); // Apre il link in una nuova scheda
           }
           saveLog(link, confirmed ? "Opened" : "Cancelled");
         });
-      } else {
-        // Se non è un dominio email o non è https, apri direttamente
+      }
+      // Caso 2: Link HTTPS (alert solo su siti email)
+      else if (link.startsWith("https:") && isEmailDomain()) {
+        showCustomModal(link, (confirmed) => {
+          if (confirmed) {
+            window.open(link, "_blank"); // Apre il link in una nuova scheda
+          }
+          saveLog(link, confirmed ? "Opened" : "Cancelled");
+        });
+      }
+      // Caso 3: Altri link (apri direttamente)
+      else {
         window.open(link, "_blank");
       }
       return;
