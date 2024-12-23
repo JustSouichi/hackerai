@@ -21,18 +21,27 @@ function populateLogTable(logs) {
   tableBody.innerHTML = ""; // Pulisce la tabella
 
   logs.forEach((log, index) => {
+    // Se il link è https e non è un link email, setta automaticamente lo status come "Opened"
+    if (log.link.startsWith("https://") && !log.link.includes("mailto:")) {
+      log.status = "Opened"; // Impostiamo lo status a "Opened"
+    }
+
     const row = document.createElement("tr");
 
+    row.classList.add("hover:bg-gray-100", "transition-all", "duration-200"); // Aggiungi effetto hover
+
     row.innerHTML = `
-      <td class="border border-gray-300 px-4 py-2">${log.date}</td>
-      <td class="border border-gray-300 px-4 py-2">${log.time}</td>
-      <td class="border border-gray-300 px-4 py-2 text-blue-500 underline break-all">
-        <a href="${log.link}" target="_blank" data-index="${index}" class="link-click">${log.link}</a>
+      <td class="py-3 px-4">${log.date}</td>
+      <td class="py-3 px-4">${log.time}</td>
+      <td class="py-3 px-4 text-blue-600 break-all">
+        <a href="${log.link}" target="_blank" data-index="${index}" class="underline">${log.link}</a>
       </td>
-      <td class="border border-gray-300 px-4 py-2 text-center">
+      <td class="py-3 px-4 text-center">
         ${log.clicked ? "✅ True" : "❌ False"}
       </td>
-      <td class="border border-gray-300 px-4 py-2">${log.status}</td>
+      <td class="py-3 px-4 text-center ${log.status === 'Opened' ? 'text-green-500' : 'text-red-500'}">
+        ${log.status === 'Opened' ? "✔️ Opened" : "❌ Cancelled"}
+      </td>
     `;
     tableBody.appendChild(row);
   });
@@ -52,6 +61,7 @@ function markLinkAsClicked(index) {
     const logs = data.logs || [];
     if (logs[index]) {
       logs[index].clicked = true; // Segna il link come cliccato
+      logs[index].status = 'Opened'; // Impostiamo lo status come "Opened" quando il link è cliccato
       chrome.storage.local.set({ logs }, () => {
         updateLogTable(); // Aggiorna la tabella
       });

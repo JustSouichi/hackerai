@@ -5,26 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HackerAI Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 </head>
-<body class="bg-gray-100">
-  <div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold text-center text-indigo-600 mb-6">📊 HackerAI Dashboard</h1>
-    <p class="text-center mb-4 text-gray-600">Below is a log of all links that triggered alerts or were clicked:</p>
-    <table class="table-auto border-collapse border border-gray-300 w-full text-left bg-white shadow-lg rounded-lg overflow-hidden">
-      <thead class="bg-indigo-500 text-white">
-        <tr>
-          <th class="border border-gray-300 px-4 py-2">📅 Date</th>
-          <th class="border border-gray-300 px-4 py-2">⏰ Time</th>
-          <th class="border border-gray-300 px-4 py-2">🔗 Link</th>
-          <th class="border border-gray-300 px-4 py-2">✔️ Clicked</th>
-          <th class="border border-gray-300 px-4 py-2">ℹ️ Status</th>
-        </tr>
-      </thead>
-      <tbody id="log-table" class="bg-white">
-        <!-- Logs will be dynamically added here -->
-      </tbody>
-    </table>
+<body class="bg-gray-50 font-sans">
+
+  <div class="container mx-auto p-6">
+    <!-- Header Section -->
+    <header class="bg-indigo-600 text-white p-8 rounded-lg shadow-lg text-center mb-8">
+      <h1 class="text-4xl font-bold">📊 HackerAI Dashboard</h1>
+      <p class="mt-2 text-lg">Here is a log of all links that triggered alerts or were clicked.</p>
+    </header>
+
+    <!-- Table Section -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full table-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <thead class="bg-indigo-500 text-white">
+          <tr>
+            <th class="py-3 px-6 text-left text-sm font-semibold">📅 Date</th>
+            <th class="py-3 px-6 text-left text-sm font-semibold">⏰ Time</th>
+            <th class="py-3 px-6 text-left text-sm font-semibold">🔗 Link</th>
+            <th class="py-3 px-6 text-center text-sm font-semibold">✔️ Clicked</th>
+            <th class="py-3 px-6 text-center text-sm font-semibold">ℹ️ Status</th>
+          </tr>
+        </thead>
+        <tbody id="log-table" class="text-gray-700">
+          <!-- Logs will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
   </div>
+
   <script src="dashboard.js"></script>
+
 </body>
 </html>
