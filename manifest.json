@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "HackerAI - Link Confirmation",
+    "version": "1.0",
+    "description": "Prompts confirmation before opening a link.",
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
+    ]
+  }
+  
