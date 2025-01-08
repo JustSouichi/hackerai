@@ -1,0 +1,172 @@
+/* Overlay che oscura lo sfondo */
+.hackerai-overlay {
+    position: fixed;
+    /* inset-0 corrisponde a top:0; right:0; bottom:0; left:0; */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    /* bg-gray-900 + bg-opacity-95 -> grigio molto scuro con opacità ~95% */
+    background-color: rgba(17, 24, 39, 0.95);
+  
+    /* z-50 in Tailwind è z-index: 50; puoi aumentare se necessario */
+    z-index: 999;
+  }
+  
+  /* Contenitore principale del popup */
+  .hackerai-modal {
+    background-color: #ffffff;               /* bg-white */
+    padding: 2.5rem;                        /* p-10 in Tailwind => 2.5rem ~ 40px */
+    border-radius: 0.75rem;                 /* rounded-xl */
+    max-width: 32rem;                       /* max-w-lg => 32rem (512px) */
+    width: 100%;                            /* w-full */
+  
+    /* shadow-xl approssimato */
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+    /* transform + transition */
+    transform: none;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Sezione header (icona + titolo) */
+  .hackerai-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+    /* mb-8 => margin-bottom ~2rem */
+    margin-bottom: 2rem;
+  }
+  
+  /* Wrapper dell’icona di avviso */
+  .hackerai-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;            /* w-16 => 4 * 4 = 16px * 4? In Tailwind, w-16 = 4rem = 64px */
+    height: 4rem;           /* h-16 => 64px */
+    background-color: #fee2e2; /* red-100 */
+    border-radius: 9999px;  /* rounded-full */
+    margin-bottom: 1rem;    /* mb-4 => ~16px */
+  }
+  
+  .hackerai-icon {
+    /* text-4xl => 2.25rem = 36px */
+    font-size: 2.25rem;
+    color: #dc2626; /* red-600 */
+  }
+  
+  /* Titolo del popup */
+  .hackerai-title {
+    font-size: 1.25rem;     /* text-xl => 20px */
+    font-weight: bold;      /* font-bold */
+    color: #111827;         /* text-gray-900 */
+    text-align: center;
+  }
+  
+  /* Sottotitolo / Testo */
+  .hackerai-subtitle {
+    color: #374151;         /* text-gray-700 */
+    text-align: center;
+    font-size: 0.875rem;    /* text-sm => 14px */
+    margin-bottom: 1.5rem;  /* mb-6 => 24px */
+  }
+  
+  /* Stile del link (testo evidenziato) */
+  .hackerai-link {
+    color: #2563eb;         /* text-blue-600 (potrebbe anche essere #1d4ed8) */
+    font-weight: 500;       /* font-medium */
+    text-align: center;
+  
+    background-color: #f9fafb; /* bg-gray-50 */
+    border: 1px solid #bfdbfe; /* border-blue-200 */
+    padding: 0.75rem;          /* p-3 => 12px */
+    border-radius: 0.5rem;     /* rounded-lg => 8px */
+  
+    /* shadow-sm approssimato */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  
+    /* break-words */
+    word-wrap: break-word;       /* O, meglio, "overflow-wrap: break-word;" */
+    overflow-wrap: break-word;
+  }
+  
+  /* Testo "Powered by" in basso */
+  .hackerai-powered {
+    color: #6b7280;         /* text-gray-500 */
+    font-size: 0.75rem;     /* text-xs => 12px */
+    text-align: center;
+    margin-top: 1.5rem;     /* mt-6 => 24px */
+  }
+  
+  .hackerai-powered span {
+    font-weight: 600;       /* font-semibold */
+    color: #374151;         /* text-gray-700 */
+  }
+  
+  /* Footer con i pulsanti */
+  .hackerai-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;       /* mt-8 => 32px */
+    gap: 1rem;              /* gap-4 => 16px */
+  }
+  
+  /* Stile generico dei pulsanti */
+  .hackerai-button {
+    flex: 1;                           /* flex-1 */
+    padding: 0.75rem 1.25rem;          /* py-3 => 12px, px-5 => 20px */
+    font-weight: 500;                  /* font-medium */
+    border-radius: 0.5rem;             /* rounded-lg => 8px */
+    outline: none;                     /* focus:outline-none */
+    cursor: pointer;
+  
+    transition: background-color 0.2s ease-in-out,
+                box-shadow 0.2s ease-in-out;
+  }
+  
+  /* Bottone Cancel */
+  #cancel {
+    background-color: #e5e7eb; /* bg-gray-200 */
+    color: #374151;            /* text-gray-700 */
+  
+    /* shadow-sm approssimato */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  
+  #cancel:hover {
+    background-color: #d1d5db; /* hover:bg-gray-300 */
+  }
+  
+  #cancel:focus {
+    /* focus:ring-2 focus:ring-gray-400 approssimato */
+    box-shadow: 0 0 0 2px #9ca3af;
+  }
+  
+  /* Bottone Proceed */
+  #accept {
+    background-color: #1d4ed8; /* bg-blue-600 */
+    color: #ffffff;
+  
+    /* shadow-lg approssimato */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  #accept:hover {
+    background-color: #1e40af; /* hover:bg-blue-700 */
+  }
+  
+  #accept:focus {
+    /* focus:ring-2 focus:ring-blue-300 approssimato */
+    box-shadow: 0 0 0 2px #93c5fd;
+  }
+  
